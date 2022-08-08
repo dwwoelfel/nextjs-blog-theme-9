@@ -13,7 +13,7 @@
     "url": "https://github.com/netlify-templates/nextjs-blog-theme/issues"
   },
   "scripts": {
-    "dev": "next",
+    "dev": "next dev -p 3002",
     "dev:watch": "next-remote-watch ./posts",
     "build": "next build",
     "start": "next start",
@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@mapbox/rehype-prism": "^0.8.0",
+    "@netlify/functions": "^1.0.0",
     "@netlify/plugin-nextjs": "4.13",
     "@tailwindcss/typography": "^0.5.0",
     "classnames": "^2.3.1",
