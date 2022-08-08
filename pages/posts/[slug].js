@@ -15,7 +15,6 @@ import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import Layout, { GradientBackground } from '../../components/Layout';
 import SEO from '../../components/SEO';
-// import {getSecrets, getSecretsForBuild} from '@netlify/functions';
 
 // Custom components/renderers to pass to MDX.
 // Since the MDX files aren't loaded by webpack, they have no knowledge of how
@@ -105,9 +104,7 @@ export const getStaticProps = async ({ params }) => {
   const { mdxSource, data } = await getPostBySlug(params.slug);
   const prevPost = getPreviousPostBySlug(params.slug);
   const nextPost = getNextPostBySlug(params.slug);
-  // const secrets = await getSecretsForBuild();
 
-  // console.log('secrets', secrets);
   return {
     revalidate: 10, // In seconds
     props: {
@@ -128,7 +125,6 @@ export const getStaticPaths = async () => {
     .map((slug) => ({ params: { slug } }));
 
   return {
-    // paths: [],
     paths,
     fallback: 'blocking',
   };
