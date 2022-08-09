@@ -15,7 +15,7 @@ import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import Layout, {GradientBackground} from '../../components/Layout';
 import SEO from '../../components/SEO';
-//import {getSecrets, getSecretsForBuild} from '@netlify/functions';
+import {getSecrets, getSecretsForBuild} from '@netlify/functions';
 
 // Custom components/renderers to pass to MDX.
 // Since the MDX files aren't loaded by webpack, they have no knowledge of how
@@ -102,8 +102,8 @@ export default function PostPage({
 export const getStaticProps = async ({params}) => {
   console.log('in getStaticProps!!!');
   console.log('where am i?');
-  // const secrets = await getSecretsForBuild();
-  // console.log('secrets', secrets);
+  const secrets = await getSecretsForBuild();
+  console.log('secrets', secrets);
   const globalData = getGlobalData();
   console.log('gd');
   try {
