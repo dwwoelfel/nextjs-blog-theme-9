@@ -1,4 +1,4 @@
-import { getGlobalData } from '../../utils/global-data';
+import {getGlobalData} from '../../utils/global-data';
 import {
   getNextPostBySlug,
   getPostBySlug,
@@ -6,15 +6,16 @@ import {
   postFilePaths,
 } from '../../utils/mdx-utils';
 
-import { MDXRemote } from 'next-mdx-remote';
+import {MDXRemote} from 'next-mdx-remote';
 import Head from 'next/head';
 import Link from 'next/link';
 import ArrowIcon from '../../components/ArrowIcon';
 import CustomLink from '../../components/CustomLink';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
-import Layout, { GradientBackground } from '../../components/Layout';
+import Layout, {GradientBackground} from '../../components/Layout';
 import SEO from '../../components/SEO';
+//import {getSecrets, getSecretsForBuild} from '@netlify/functions';
 
 // Custom components/renderers to pass to MDX.
 // Since the MDX files aren't loaded by webpack, they have no knowledge of how
@@ -98,23 +99,34 @@ export default function PostPage({
   );
 }
 
-export const getStaticProps = async ({ params }) => {
+export const getStaticProps = async ({params}) => {
   console.log('in getStaticProps!!!');
+  console.log('where am i?');
+  // const secrets = await getSecretsForBuild();
+  // console.log('secrets', secrets);
   const globalData = getGlobalData();
-  const { mdxSource, data } = await getPostBySlug(params.slug);
-  const prevPost = getPreviousPostBySlug(params.slug);
-  const nextPost = getNextPostBySlug(params.slug);
+  console.log('gd');
+  try {
+    const {mdxSource, data} = await getPostBySlug(params.slug);
+    console.log('pbs');
+    const prevPost = getPreviousPostBySlug(params.slug);
+    console.log('pp');
+    const nextPost = getNextPostBySlug(params.slug);
+    console.log('np');
 
-  return {
-    revalidate: 10, // In seconds
-    props: {
-      globalData,
-      source: mdxSource,
-      frontMatter: data,
-      prevPost,
-      nextPost,
-    },
-  };
+    return {
+      revalidate: 10, // In seconds
+      props: {
+        globalData,
+        source: mdxSource,
+        frontMatter: data,
+        prevPost,
+        nextPost,
+      },
+    };
+  } catch (e) {
+    console.error('raised exception', e);
+  }
 };
 
 export const getStaticPaths = async () => {
@@ -122,9 +134,10 @@ export const getStaticPaths = async () => {
     // Remove file extensions for page paths
     .map((path) => path.replace(/\.mdx?$/, ''))
     // Map the path into the static paths object required by Next.js
-    .map((slug) => ({ params: { slug } }));
+    .map((slug) => ({params: {slug}}));
 
   return {
+    // paths: [],
     paths,
     fallback: 'blocking',
   };

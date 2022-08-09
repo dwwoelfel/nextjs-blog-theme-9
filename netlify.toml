@@ -1,5 +1,5 @@
 [build]
-  command = "npm run build"
+  command = "rm -rf node_modules/@netlify/plugin-nextjs && rm -rf node_modules/@netlify/functions && mv plugin-nextjs node_modules/@netlify/plugin-nextjs && mv functions node_modules/@netlify/functions && npm run build"
   publish = ".next"
 
 [[plugins]]
