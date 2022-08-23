@@ -1,8 +1,10 @@
-import {postFilePaths} from '../../utils/mdx-utils';
-
 import Header from '../../components/Header';
 import Layout from '../../components/Layout';
-import {getSecrets, getSecretsForBuild} from '@netlify/functions';
+import {
+  getSecrets,
+  getSecretsForBuild,
+  getNetlifyGraphTokenForBuild,
+} from '@netlify/functions';
 import {Octokit} from 'octokit';
 
 export default function PostPage({params}) {
@@ -14,10 +16,15 @@ export default function PostPage({params}) {
 }
 
 export const getStaticProps = async ({params}) => {
+  console.log('env', process.env._NETLIFY_GRAPH_TOKEN);
+  const ngt = getNetlifyGraphTokenForBuild();
+  console.log('ngt', ngt);
   const secrets = await getSecretsForBuild();
   const token = secrets.gitHub?.bearerToken;
-
+  console.log('secrets', secrets);
+  console.log('token', token);
   if (!token) {
+    console.log('secrets', secrets);
     return {
       revalidate: 10, // In seconds
       props: {
@@ -48,15 +55,14 @@ export const getStaticProps = async ({params}) => {
 };
 
 export const getStaticPaths = async () => {
-  const paths = postFilePaths
-    // Remove file extensions for page paths
-    .map((path) => path.replace(/\.mdx?$/, ''))
-    // Map the path into the static paths object required by Next.js
-    .map((slug) => ({params: {slug}}));
+  // const paths = postFilePaths
+  //   // Remove file extensions for page paths
+  //   .map((path) => path.replace(/\.mdx?$/, ''))
+  //   // Map the path into the static paths object required by Next.js
+  //   .map((slug) => ({params: {slug}}));
 
   return {
-    // paths: [],
-    paths,
+    paths: [{params: {slug: '1'}}, {params: {slug: '10'}}],
     fallback: 'blocking',
   };
 };
