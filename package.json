@@ -22,8 +22,8 @@
   },
   "dependencies": {
     "@mapbox/rehype-prism": "^0.8.0",
-    "@netlify/functions": "^1.0.0",
-    "@netlify/plugin-nextjs": "4.14.1",
+    "@netlify/functions": "^1.2.0-rc",
+    "@netlify/next": "^1.1.0",
     "@tailwindcss/typography": "^0.5.0",
     "classnames": "^2.3.1",
     "gray-matter": "^4.0.2",
