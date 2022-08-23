@@ -1,5 +1,3 @@
-import {postFilePaths} from '../../utils/mdx-utils';
-
 import Header from '../../components/Header';
 import Layout from '../../components/Layout';
 import {
